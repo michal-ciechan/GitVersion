@@ -78,6 +78,12 @@ GitVersion [path]
     /dynamicRepoLocation
                     By default dynamic repositories will be cloned to %tmp%. Use this switch to override
     /nofetch        Disables 'git fetch' during version calculation. Might cause GitVersion to not calculate your version as expected.
+    /usebuildagentbranch
+                    Forces the use of Build Agent branch if available as a starting point for calculating your version.
+                    Might cause GitVersion to not calculate your version as expected for transient branches.
+    /azurepipelines-setparamskipisoutput
+                    Azure Pipelines Build Agent Only.
+                    Forces variable outputs not to contain isoutput=true when setting params. This causes errors in certain TFS servers.
 
 # Execute build args
     /exec           Executes target executable making GitVersion variables available as environmental variables

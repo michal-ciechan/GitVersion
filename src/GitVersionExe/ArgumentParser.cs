@@ -272,6 +272,18 @@ namespace GitVersion
                 return true;
             }
 
+            if (name.IsSwitch("usebuildagentbranch"))
+            {
+                arguments.UseBuildAgentBranch = true;
+                return true;
+            }
+
+            if (name.IsSwitch("azurepipelines-setparamskipisoutput"))
+            {
+                arguments.AzurePipelinesSetParamSkipIsOutput = true;
+                return true;
+            }
+
             if (name.IsSwitch("verbosity"))
             {
                 ParseVerbosity(arguments, value);

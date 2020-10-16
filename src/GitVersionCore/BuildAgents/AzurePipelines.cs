@@ -1,16 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using GitVersion.Extensions;
 using GitVersion.Logging;
 using GitVersion.OutputVariables;
+using Microsoft.Extensions.Options;
 
 namespace GitVersion.BuildAgents
 {
     public class AzurePipelines : BuildAgentBase
     {
-        public AzurePipelines(IEnvironment environment, ILog log) : base(environment, log)
+        private readonly Func<GitVersionOptions> options;
+
+        public AzurePipelines(IEnvironment environment, ILog log, Func<GitVersionOptions> options) : base(environment, log)
         {
+            this.options = options;
         }
 
         public const string EnvironmentVariableName = "TF_BUILD";
@@ -19,11 +24,20 @@ namespace GitVersion.BuildAgents
 
         public override string[] GenerateSetParameterMessage(string name, string value)
         {
-            return new[]
-            {
-                $"##vso[task.setvariable variable=GitVersion.{name}]{value}",
-                $"##vso[task.setvariable variable=GitVersion.{name};isOutput=true]{value}"
-            };
+            var standardSet = $"##vso[task.setvariable variable=GitVersion.{name}]{value}";
+            var isOutputSet = $"##vso[task.setvariable variable=GitVersion.{name};isOutput=true]{value}";
+
+            return options().Settings.AzurePipelinesSetParamSkipIsOutput
+                ? new[]
+                {
+                    standardSet
+                }
+                : new[]
+                {
+                    standardSet,
+                    isOutputSet
+
+                };
         }
 
         public override string GetCurrentBranch(bool usingDynamicRepos)

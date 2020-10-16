@@ -35,15 +35,17 @@ namespace GitVersion
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddModule(new GitVersionCoreModule());
-                    services.AddModule(new GitVersionExeModule());
-
                     services.AddSingleton(sp =>
                     {
                         var arguments = sp.GetService<IArgumentParser>().ParseArguments(args);
                         var gitVersionOptions = arguments.ToOptions();
                         return Options.Create(gitVersionOptions);
                     });
+
+                    services.AddSingleton<Func<GitVersionOptions>>(sp => () => sp.GetRequiredService<IOptions<GitVersionOptions>>().Value);
+
+                    services.AddModule(new GitVersionCoreModule());
+                    services.AddModule(new GitVersionExeModule());
 
                     overrides?.Invoke(services);
                     services.AddHostedService<GitVersionApp>();

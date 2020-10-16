@@ -69,7 +69,9 @@ namespace GitVersion.MSBuildTask
                 Settings =
                 {
                     NoFetch = task.NoFetch,
-                    NoNormalize = task.NoNormalize
+                    NoNormalize = task.NoNormalize,
+                    UseBuildAgentBranch = task.UseBuildAgentBranch,
+                    AzurePipelinesSetParamSkipIsOutput = task.AzurePipelinesSetParamSkipIsOutput
                 }
             };
 

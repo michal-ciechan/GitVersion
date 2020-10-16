@@ -108,6 +108,8 @@ namespace GitVersion.Extensions
                 "nofetch",
                 "nonormalize",
                 "nocache",
+                "usebuildagentbranch",
+                "azurepipelines-setparamskipisoutput"
             };
 
             var argumentMightRequireValue = !booleanArguments.Contains(argument.Substring(1), StringComparer.OrdinalIgnoreCase);

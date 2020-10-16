@@ -30,6 +30,8 @@ namespace GitVersion
         public bool NoFetch;
         public bool NoCache;
         public bool NoNormalize;
+        public bool UseBuildAgentBranch;
+        public bool AzurePipelinesSetParamSkipIsOutput;
 
         public string LogFilePath;
         public string ShowVariable;
@@ -85,6 +87,8 @@ namespace GitVersion
                     NoFetch = NoFetch,
                     NoCache = NoCache,
                     NoNormalize = NoNormalize,
+                    UseBuildAgentBranch = UseBuildAgentBranch,
+                    AzurePipelinesSetParamSkipIsOutput = AzurePipelinesSetParamSkipIsOutput,
                 },
 
                 WixInfo =

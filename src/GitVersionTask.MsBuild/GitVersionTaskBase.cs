@@ -22,6 +22,10 @@ namespace GitVersion.MSBuildTask
 
         public bool NoNormalize { get; set; }
 
+        public bool UseBuildAgentBranch { get; set; }
+
+        public bool AzurePipelinesSetParamSkipIsOutput { get; set; }
+
         public TaskLoggingHelper Log { get; }
 
         public bool Execute()
