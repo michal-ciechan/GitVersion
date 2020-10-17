@@ -1,3 +1,4 @@
+using System;
 using GitVersion;
 using GitVersion.BuildAgents;
 using GitVersionCore.Tests.Helpers;
@@ -51,6 +52,16 @@ namespace GitVersionCore.Tests.BuildAgents
 
             vsVersion.ShouldContain("##vso[task.setvariable variable=GitVersion.Foo]0.8.0-unstable568 Branch:'develop' Sha:'ee69bff1087ebc95c6b43aa2124bd58f5722e0cb'");
             vsVersion.ShouldContain("##vso[task.setvariable variable=GitVersion.Foo;isOutput=true]0.8.0-unstable568 Branch:'develop' Sha:'ee69bff1087ebc95c6b43aa2124bd58f5722e0cb'");
+        }
+
+        [Test]
+        public void GenerateSetParametersShouldNotAddIsOutputIfSkipFlagIsSet()
+        {
+            //TODO: Set Flag (TBD)
+            var vsVersion = buildServer.GenerateSetParameterMessage("Foo", "Bar");
+
+            vsVersion.ShouldContain("##vso[task.setvariable variable=GitVersion.Foo]Bar");
+            vsVersion.ShouldNotContain(x =>x.Contains("isOutput", StringComparison.OrdinalIgnoreCase));
         }
 
         [Test]
